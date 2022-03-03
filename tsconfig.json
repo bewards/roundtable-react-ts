@@ -1,0 +1,53 @@
+{
+    "compilerOptions": {
+        
+        //* JS version your typescript will eventually compile to (es5, es2020, commonJS, UMD)
+        "target": "es5",
+
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "noImplicitReturns": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+
+        // *ex: strict null checks, strict function types and calls, etc.
+        "strict": true,
+
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+
+        
+        //* Tells TypeScript not to transpile any module syntax at all
+        "module": "esnext",
+        "moduleResolution": "node",
+
+        //* Allows importing modules with a ‘.json’ extension (useful for static mock data)
+        "resolveJsonModule": true,
+
+        //* Forbids legacy scripts (files without imports/exports - there is a workaround we will discuss for this)
+        "isolatedModules": true,
+
+        //* When true, TS will be used solely as a tool for type-checking and editor integration, not handling conversion of TS files (CRA or Webpack + Babel will handle build output!)
+        "noEmit": true,
+
+        //* Using TypeScript with React provides better IntelliSense, code completion for JSX
+        "jsx": "react-jsx",
+        
+        //* Only use this option if running `tsc` (typescript compiler cli) directly and "noEmit: false"
+        // "outDir": "./built", 
+    },
+    //* vscode will use the language service "typescript" for all files in this array of glob patterns
+    "include": [
+        "src"
+    ],
+    
+    //* If exclude is disabled, TypeScript will exclude: node_modules, bower_components, etc. 
+    // * In our case above, "src" doesn't include any of these so "exclude" isn't necessary
+    // ref: https://www.typescriptlang.org/tsconfig#exclude
+    "exclude": ["node_modules/*", ".tmp/*", "src/extensions/*"],
+}
