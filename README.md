@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# Basics Overview
+- TypeScript allows you to gradually adapt its usage in your existing projects
+- Early benefits includ:
+    - intellisense of most installed packages
+    - automatic strict checking of types
+    - auto-complete
+    - reduces bugs and headaches of post compilation
+- Easy to find support and answers due to it being widely encouraged
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Migrating from Javascript
 
-## Available Scripts
+## From Scratch w/ React
+- CRA? Use the typescript template: `npx create-react-app my-react-app --template typescript`
+    - see below "existing react app" for what additional is installed
 
-In the project directory, you can run:
+- React + webpack?
+    - `npm install webpack webpack-cli ts-loader --save-dev`
+    - `npm install react react-dom @types/react @types/react-dom --save-dev`
+    - create `webpack.config.js`
 
-### `npm start`
+## Existing React App
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### install TS npm packages
+- `npm install typescript @types/node @types/react @types/react-dom @types/jest --save-dev`
+- @types is a central repository of packages dedicated to typings for libraries that don't have type files directly in it's own package
+    - if you're not automatically receiving types after an import, check out the types search, https://www.typescriptlang.org/dt/search, to see where the types exist.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Set up a TS Config File
+- create configuration file `tsconfig.json` (or copy from the react typescript template above)
+- review `tsconfig.json` comments
 
-### `npm test`
+### Rename JS Files
+- rename React component files to `.tsx`
+- rename normal JavaScript files to `.ts`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Existing JS App
 
-### `npm run build`
+### install TS npm packages
+- rollup?
+    - `npm install @rollup/plugin-typescript typescript --save-dev`
+    - linting? `npm install @typescript-eslint/eslint-plugin @typescript-eslint/parser`
+    - babel? `npm install @babel/core @rollup/plugin-babel @babel/plugin-external-helpers @babel/plugin-transform-runtime @babel/eslint-parser @babel/register @rollup/plugin-commonjs @rollup/plugin-node-resolve --save-dev`
+    - create rollup.config OR gulp.babel.js
+- webpack?
+    - `npm install webpack webpack-cli webpack-dev-server @types/webpack-dev-server --save-dev`
+    - babel? `npm install babel-loader --save-dev` (to allow Babel to transpile the TypeScript code into JavaScript)
+    - type checking during bundling? `npm install fork-ts-checker-webpack-plugin @types/fork-ts-checker-webpack-plugin --save-dev`
+    - create webpack.config: https://learntypescript.dev/12/l4-webpack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Run CRA
+- Why didn't the build catch the error?
+    - JS to TSX: inspect Loader.js
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Review JS Files
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Rename JS Files: Basics.js
+- review in file
 
-### `npm run eject`
+### Review Global Namespace Module + Type Extensions
+- You can declare global variables / functions in the global scope by using `declare global { ... }` syntax to access `window.property` / `property`
+    - useful for libraries that expose global variables OR creating *extension methods* (prototype methods)
+- review /typings/globals.d.ts
+- review /extensions/dom.extensions.ts
+- enable images.d.ts.disabled
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Rename JS Files: Loader.tsx
+- review Error: Importing images in TypeScript React - "Cannot find module"
+    - create a `./src/typings` directory for all custom [Type Declarations](https://www.typescriptlang.org/docs/handbook/2/type-declarations.html) in order to fix this error
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Rename JS Files: Photos.tsx
+- review error in terminal/web: *Property 'x' does not exist on type 'never'*
+    - create interface or type "response model"
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Troubleshooting
+- errors not appearing in vscode until file is opened: set `enableProjectDiagnostics` to true in UI Workspace settings (experimental)
